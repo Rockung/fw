@@ -1,0 +1,21 @@
+mvn -X archetype:generate -DgroupId=com.***.*** -DartifactId=***-tag 
+-DarchetypeArtifactId=maven-archetype-webapp 
+-DinteractiveMode=false -DarchetypeCatalog=local
+
+mvn -version/-v 显示版本信息
+
+mvn archetype:generate 创建mvn项目
+
+mvn archetype:create -DgroupId=com.oreilly -DartifactId=my-app 创建mvn项目
+
+mvn package 生成target目录，编译、测试代码，生成测试报告，生成jar/war文件
+
+mvn jetty:run 运行项目于jetty上,
+
+mvn compile 编译
+
+mvn test 编译并测试
+
+mvn clean 清空生成的文件
+
+mvn site 生成项目相关信息的网站
