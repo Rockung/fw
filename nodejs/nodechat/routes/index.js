@@ -5,7 +5,17 @@ module.exports.chat = chat;
 
 function index(req, res){
 	// res.send('Index');
-	res.render('index', {layout: 'layout', title: 'Index'});
+	// res.render('index', {layout: 'layout', title: 'Index'});
+	console.log("index start...");
+	
+	res.cookie('IndexCookie', 'This was set from Index');
+	res.render('index', {
+		title: 'Index', 
+		cookie: JSON.stringify(req.cookies), 
+		session: JSON.stringify(req.session)
+	});
+	console.log("index end...");
+	// res.end();
 };
 
 function login(req, res){

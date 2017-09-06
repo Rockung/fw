@@ -1,0 +1,9 @@
+1. 把 app.use(cookieParser());写成app.use(cookieParser);
+   中间件执行不下去，页面进入死循环。
+  
+   此问题整了我一个晚上。
+  
+2. 打开调试
+   set DEBUG=express:* & node ./app.js --- windows
+   DEBUG=express:* node index.js       --- linux
+  
