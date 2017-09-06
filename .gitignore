@@ -9,6 +9,7 @@ nb*
 target/
 build/
 bin/
+node_modules/
 tags
 .idea
 *.aof
