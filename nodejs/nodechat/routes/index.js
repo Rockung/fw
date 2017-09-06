@@ -4,7 +4,8 @@ module.exports.loginProcess = loginProcess;
 module.exports.chat = chat;
 
 function index(req, res){
-	res.send('Index');
+	// res.send('Index');
+	res.render('index');
 };
 
 function login(req, res){

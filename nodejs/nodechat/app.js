@@ -4,6 +4,8 @@ var routes = require('./routes');
 var errorHandlers = require('./middleware/errorhandlers');
 var log = require('./middleware/log');
 
+app.set('view engine', 'ejs');
+
 app.use(log.logger);
 app.use(express.static(__dirname + '/static'));
 
