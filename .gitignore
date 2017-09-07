@@ -9,6 +9,7 @@ nb*
 target/
 build/
 bin/
+package-lock.json
 node_modules/
 tags
 .idea
