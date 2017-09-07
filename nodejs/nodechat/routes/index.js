@@ -15,7 +15,6 @@ function index(req, res){
 		session: JSON.stringify(req.session)
 	});
 	console.log("index end...");
-	// res.end();
 };
 
 function login(req, res){

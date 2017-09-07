@@ -13,8 +13,18 @@ app.set('view options', {defaultLayout: 'layout'});
 app.use(partials());
 app.use(log.logger);
 app.use(express.static(__dirname + '/static'));
-app.use(cookieParser("12345678"));
-app.use(session());
+// app.use(cookieParser("12345678"));
+// app.use(session());
+app.use(session({secret: 'secret'}));
+
+app.use(function(req, res, next){
+	if(req.session.pageCount)
+		req.session.pageCount++;
+	else
+		req.session.pageCount = 1;
+	console.log("Page count: " + req.session.pageCount);
+	next();
+});
 
 app.get('/', routes.index);
 app.get('/login', routes.login);
