@@ -1,0 +1,24 @@
+{
+  "name": "rabbitmq-test",
+  "version": "0.0.1",
+  "description": "Multiple front-end test for Rabbitmq",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "amqp": "0.2.0",
+    "punt": "^2.3.0",
+    "socket.io": "2.0.3",
+    "socket.io-client": "2.0.3"
+  },
+  "keywords": [
+    "http",
+    "socket-io",
+    "punt",
+    "amqp",
+    "rabbitmq"
+  ],
+  "author": "xiwen, peng",
+  "license": "ISC"
+}
