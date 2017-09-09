@@ -1,6 +1,6 @@
 var punt = require('punt');
 
-var server = "172.27.35.1:5000";
+var server = "127.0.0.1:5000";
 var a = punt.connect(server);
 var b = punt.connect(server);
 var c = punt.connect(server);
