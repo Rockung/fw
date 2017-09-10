@@ -31,6 +31,7 @@ why use process.nextTick()?
 * allow users to handle errors, cleanup any then unneeded resources, or perhaps try the request again before the event loop continues
 * at times it's necessary to allow a callback to run after the call stack has unwound but before the event loop continues
 
+```
 const EventEmitter = require('events');
 const util = require('util');
 
@@ -48,4 +49,6 @@ const myEmitter = new MyEmitter();
 myEmitter.on('event', () => {
   console.log('an event occurred!');
 });
+```
+
 
