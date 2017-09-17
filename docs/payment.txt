@@ -1,0 +1,4 @@
+OTP: One-time Password Algorithm
+
+Time-based One-time Password Algorithm
+HMAC-Based One-Time Password Algorithm
