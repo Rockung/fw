@@ -5,6 +5,8 @@ def fib(max):
     a,b = b, a+b
     max -= 1
     yield r
-    
-for i in fib(5):
-  print(i)
+
+# python generator.py
+if __name__ == '__main__':
+  for i in fib(5):
+    print(i)
