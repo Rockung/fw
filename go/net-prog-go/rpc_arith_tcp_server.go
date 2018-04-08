@@ -1,11 +1,11 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net"
 	"net/rpc"
 	"os"
-	"errors"
 )
 
 type Values struct {
