@@ -1,22 +1,22 @@
 package main
 
 import (
-  _ "runtime"
-  "fmt"
+	"fmt"
+	_ "runtime"
 )
 
 func showNumber(num int) {
-  fmt.Println(num)
+	fmt.Println(num)
 }
 
 func main() {
-  iterations := 10
+	iterations := 10
 
-  for i := 0; i <= iterations; i++ {
-    go showNumber(i)
-  }
+	for i := 0; i <= iterations; i++ {
+		go showNumber(i)
+	}
 
-  // runtime.Gosched()
-  fmt.Println("Goodbye!")
-  // for {}
+	// runtime.Gosched()
+	fmt.Println("Goodbye!")
+	// for {}
 }
