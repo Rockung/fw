@@ -1,0 +1,5 @@
+zero value
+  false booleans
+  0     numeric type
+  ""    strings
+  nil   pointers, functions, interfaces, slices, channels, maps

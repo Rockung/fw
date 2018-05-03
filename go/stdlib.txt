@@ -1,0 +1,68 @@
+errors
+  func New(text string) error
+
+  // spec#Errors
+  type error interface {
+    Error() string
+  }
+
+syscall
+time
+  type Location struct
+  func (l *Location) String() string
+  func Fixedzone(name string, offset int) *Location
+  func LoadLocation(name string) (*Location, err)
+
+  type Time struct
+  func (t Time) After(u Time) bool
+  func (t Time) Before(u Time) bool
+  func (t Time) Equal(u Time) bool
+  func (t Time) IsZero() bool
+  func (t Time) Date() (year int, month Month, day int)
+  func (t Time) Year() int
+  func (t Time) Month() Month
+  func (t Time) Day()
+  func (t Time) Weekday() Weekday
+  func (t Time) Clock() (hour, min, sec int)
+  func (t Time) Hour() int
+  func (t Time) Minute() int
+  func (t Time) Second() int
+  func (t Time) Nanosecond() int
+  func (t Time) String() string
+  func (t Time) Format(layout string) string
+  func (t Time) AppendFormat(b []byte, layout string) []byte
+
+  type Duration int64
+  func (d Duration) String() string
+  func (d Duration) Nanoseconds() int64
+  func (d Duration) Seconds() float64
+  func (d Duration) Minutes() float64
+  func (d Duration) Hours() float64
+  func (d Duration) Round(m Duration) Duration
+  func (t Time) Add(d Duration) Time
+  func (t Time) Sub(u Time) Duration
+  func Since(t Time) Duration
+  func Until(t Time) Duration
+  func (t Time) AddDate(years int, months int, days int) Time
+  func Now() Time
+
+  type Month int
+  func (m Month) String() string
+
+  type Weekday int
+  func (d Weekday) String() string
+
+  type Ticker struct
+  func NewTicker(d Duration) *Ticker
+  func (t *Ticker) Stop()
+  func Tick(d Duration) <-chan Time
+
+  func Sleep(d Duration)
+
+  type Timer struct
+  func (t *Timer) Stop() bool
+  func (t *Timer) Reset(d Duration) bool
+
+  func NewTimer(d Duration) *Timer
+  func After(d Duration) <-chan Time
+  func AfterFunc(d Duration, f func()) *Timer
