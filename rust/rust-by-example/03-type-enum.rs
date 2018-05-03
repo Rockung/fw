@@ -1,3 +1,4 @@
+// hide warnings for unused code
 #![allow(dead_code)]
 
 enum WebEvent {
