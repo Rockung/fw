@@ -68,5 +68,10 @@
 * references must always be valid
 
 # Slices
-> let you reference a contiguous sequence of elements in a collection rather than the whole collection
+> let you reference a contiguous sequence of elements in a collection rather than the whole collection, which does not have ownership
 
+## String Slices
+> a reference to part of a String with .. range syntax
+
+* &s[0..2], &s[..2], &s[3..len], &s[3..], &s[..]
+* string literals are slices: &str
