@@ -75,3 +75,4 @@
 
 * &s[0..2], &s[..2], &s[3..len], &s[3..], &s[..]
 * string literals are slices: &str
+* string slices as parameters: fn first_word(s: &str) -> &str {}

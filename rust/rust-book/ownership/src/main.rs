@@ -1,19 +1,20 @@
 fn main() {
-    // let mut s = String::from("hello");
-    // s.push_str(", world!");
-    // println!("{}", s);
+    let my_string = String::from("hello world");
 
-    let mut s = String::from("Hello world");
+    // first_word works on slices of `String`s
+    let word = first_word(&my_string[..]);
 
-    // immutable borrow here
-    let word = first_word(&s);
+    let my_string_literal = "hello world";
 
-    // mutable borrow occurs here
-    // s.clear();
-    println!("the first index: {}", word);
+    // first_word works on slices of string literals
+    let word = first_word(&my_string_literal[..]);
+
+    // Because string literals *are* string slices already,
+    // this works too, without the slice syntax!
+    let word = first_word(my_string_literal);
 }
 
-fn first_word(s: &String) -> &str {
+fn first_word(s: &str) -> &str {
     let bytes = s.as_bytes();
 
     for (i, &item) in bytes.iter().enumerate() {
