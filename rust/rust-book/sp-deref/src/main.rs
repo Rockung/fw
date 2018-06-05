@@ -17,6 +17,10 @@ impl<T> Deref for MyBox<T> {
     }
 }
 
+fn hello(name: &str) {
+    println!("Hello, {}!", name);
+}
+
 fn main() {
     let x = 5;
     // let y = &x;
@@ -24,4 +28,15 @@ fn main() {
 
     assert_eq!(5, x);
     assert_eq!(5, *y);
+
+    hello("Rust");
+
+    let m = MyBox::new(String::from("Rust"));
+                
+    // deref coercion:
+    //               Deref      Deref 
+    //                *m        &[..]
+    // &MyBox<String> -> &String -> &str
+    hello(&m);
+    hello(&(*m)[..]);
 }
