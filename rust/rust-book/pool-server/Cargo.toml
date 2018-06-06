@@ -1,0 +1,6 @@
+[package]
+name = "poolserver"
+version = "0.1.0"
+authors = ["xiwen, peng <xiwen.peng@lesiji.top>"]
+
+[dependencies]
