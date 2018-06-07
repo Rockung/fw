@@ -1,0 +1,15 @@
+[package]
+name = "multi-bin"
+version = "0.1.0"
+autobins = false
+authors = ["xiwen, peng <xiwen.peng@lesiji.top>"]
+
+[[bin]]
+name = "drink"
+path = "src/drink.rs"
+
+[[example]]
+name = "beer"
+path = "src/drink.rs"
+
+[dependencies]
