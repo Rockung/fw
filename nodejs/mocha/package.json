@@ -1,0 +1,14 @@
+{
+  "name": "learning-mocha",
+  "version": "0.0.1",
+  "description": "Learning mocha",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "xiwen, peng (xiwen.peng@lesiji.top)",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
