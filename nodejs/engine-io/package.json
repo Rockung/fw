@@ -1,0 +1,15 @@
+{
+  "name": "engine-io-examples",
+  "version": "0.0.1",
+  "description": "Examples for engine-io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xiwen, peng (xiwen.peng@lesiji.top)",
+  "license": "ISC",
+  "dependencies": {
+    "engine.io": "^3.3.2",
+    "engine.io-client": "^3.3.1"
+  }
+}
