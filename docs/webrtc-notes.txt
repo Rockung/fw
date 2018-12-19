@@ -1,0 +1,59 @@
+'use restrict';
+
+## getUserMedia
+const constraints = {
+    audio: false,
+    video: true
+};
+const stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+const video = document.querySelector('video');
+video.srcObject = stream;
+
+const videoTracks = stream.getVideoTracks();
+console.log(videoTracks[0].label)
+
+## take a snapshot
+const canvas = document.querySelector('canvas');
+canvas.width = video.videoWidth;
+canvas.height = video.videoHeight;
+canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+
+## CSS filters
+const filterSelect = document.querySelector('select#filter');
+video.className = filterSelect.value;
+canvas.className = filterSelect.value;
+
+## Local audio
+const audioTracks = stream.getAudioTracks();
+stream.oninactive = function() {
+    console.log('Stream ended');
+};
+
+## Audio volume
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+window.audioContext = new AudioContext();
+script = audioContext.createScriptProcessor(2048, 1, 1);
+this.mic = this.audioContext.createMediaStreamSource(stream);
+this.mic.connect(this.script);
+// necessary to make sample run, but should not be.
+this.script.connect(this.audioContext.destination);
+
+## Record and download
+const mediaSource = new MediaSource();
+sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
+mediaRecorder = new MediaRecorder(window.stream, options);
+recordedBlobs = [];
+recordedBlobs.push(event.data);
+const blob = new Blob(recordedBlobs, {type: 'video/webm'});
+const url = window.URL.createObjectURL(blob);
+
+## Capture screen
+if (navigator.getDisplayMedia) {
+    return navigator.getDisplayMedia({video: true});
+} else {
+    return navigator.mediaDevices.getUserMedia({video: {mediaSource: 'screen'}});
+}
+
