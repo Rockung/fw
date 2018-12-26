@@ -1,6 +1,6 @@
-const sequelize = require('./db');
+const Db = require('./db');
 
-sequelize
+Db
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
