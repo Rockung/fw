@@ -6,3 +6,9 @@ User
   .then(user => {
     console.log(user.get('name'));
   });
+
+User
+  .create({ name: 'Kelvin Peng' })
+  .then(user => {
+    console.log(user.get('name'));
+  });
