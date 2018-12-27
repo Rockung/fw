@@ -1,7 +1,7 @@
 {
-  "name": "get-start",
+  "name": "migration",
   "version": "0.0.1",
-  "description": "",
+  "description": "example for migration",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "continuation-local-storage": "^3.2.1",
-    "sequelize": "^4.42.0",
+    "sequelize-cli": "^5.4.0",
     "sqlite3": "^4.0.4"
   }
 }
