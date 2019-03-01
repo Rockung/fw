@@ -1,0 +1,6 @@
+spring
+   MVC
+   boot
+   hibernate
+vert.x
+   ebean

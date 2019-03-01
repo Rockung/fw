@@ -1,0 +1,508 @@
+## Screen capturing
+
+partial interface NavigatorUserMedia {
+  Promise<MediaStream> getDisplayMedia (MediaStreamConstraints constraints);
+};
+
+partial dictionary MediaTrackConstraintSet {
+  ConstrainDOMString displaySurface;
+  ConstrainBoolean   logicalSurface;
+};
+
+enum DisplayCaptureSurfaceType {
+  "monitor",
+  "window",
+  "application",
+  "browser"
+};
+
+## RTC between browers
+
+dictionary RTCConfiguration {
+  sequence<RTCIceServer>   iceServers;
+  RTCIceTransportPolicy    iceTransportPolicy = "all";
+  RTCBundlePolicy          bundlePolicy = "balanced";
+  RTCRtcpMuxPolicy         rtcpMuxPolicy = "require";
+  DOMString                peerIdentity;
+  sequence<RTCCertificate> certificates;
+  [EnforceRange]
+  octet                    iceCandidatePoolSize = 0;
+};
+
+enum RTCIceCredentialType {
+  "password",
+  "oauth"
+};
+
+dictionary RTCOAuthCredential {
+  required DOMString macKey;
+  required DOMString accessToken;
+};
+
+dictionary RTCIceServer {
+  required (DOMString or sequence<DOMString>) urls;
+            DOMString                          username;
+            (DOMString or RTCOAuthCredential)  credential;
+            RTCIceCredentialType               credentialType = "password";
+};
+
+enum RTCIceTransportPolicy {
+  "relay",
+  "all"
+};
+
+enum RTCBundlePolicy {
+  "balanced",
+  "max-compat",
+  "max-bundle"
+};
+
+enum RTCRtcpMuxPolicy {
+  // At risk due to lack of implementers' interest.
+  "negotiate",
+  "require"
+};
+
+dictionary RTCOfferAnswerOptions {
+  boolean voiceActivityDetection = true;
+};
+
+dictionary RTCOfferOptions : RTCOfferAnswerOptions {
+  boolean iceRestart = false;
+};
+
+dictionary RTCAnswerOptions : RTCOfferAnswerOptions {
+};
+
+enum RTCSignalingState {
+  "stable",
+  "have-local-offer",
+  "have-remote-offer",
+  "have-local-pranswer",
+  "have-remote-pranswer",
+  "closed"
+};
+
+enum RTCIceGatheringState {
+  "new",
+  "gathering",
+  "complete"
+};
+
+enum RTCPeerConnectionState {
+  "new",
+  "connecting",
+  "connected",
+  "disconnected",
+  "failed",
+  "closed"
+};
+
+enum RTCIceConnectionState {
+  "new",
+  "checking",
+  "connected",
+  "completed",
+  "disconnected",
+  "failed",
+  "closed"
+};
+
+[Constructor(optional RTCConfiguration configuration),
+ Exposed=Window]
+interface RTCPeerConnection : EventTarget {
+  Promise<RTCSessionDescriptionInit> createOffer(optional RTCOfferOptions options);
+  Promise<RTCSessionDescriptionInit> createAnswer(optional RTCAnswerOptions options);
+  Promise<void>                      setLocalDescription(RTCSessionDescriptionInit description);
+  readonly attribute RTCSessionDescription? localDescription;
+  readonly attribute RTCSessionDescription? currentLocalDescription;
+  readonly attribute RTCSessionDescription? pendingLocalDescription;
+  Promise<void>                      setRemoteDescription(RTCSessionDescriptionInit description);
+  readonly attribute RTCSessionDescription? remoteDescription;
+  readonly attribute RTCSessionDescription? currentRemoteDescription;
+  readonly attribute RTCSessionDescription? pendingRemoteDescription;
+  Promise<void>                      addIceCandidate(RTCIceCandidateInit candidate);
+  readonly attribute RTCSignalingState      signalingState;
+  readonly attribute RTCIceGatheringState   iceGatheringState;
+  readonly attribute RTCIceConnectionState  iceConnectionState;
+  readonly attribute RTCPeerConnectionState connectionState;
+  readonly attribute boolean?               canTrickleIceCandidates;
+  static sequence<RTCIceServer>      getDefaultIceServers();
+  RTCConfiguration                   getConfiguration();
+  void                               setConfiguration(RTCConfiguration configuration);
+  void                               close();
+            attribute EventHandler           onnegotiationneeded;
+            attribute EventHandler           onicecandidate;
+            attribute EventHandler           onicecandidateerror;
+            attribute EventHandler           onsignalingstatechange;
+            attribute EventHandler           oniceconnectionstatechange;
+            attribute EventHandler           onicegatheringstatechange;
+            attribute EventHandler           onconnectionstatechange;
+};
+
+partial interface RTCPeerConnection {
+  Promise<void> createOffer(RTCSessionDescriptionCallback successCallback,
+                            RTCPeerConnectionErrorCallback failureCallback,
+                            optional RTCOfferOptions options);
+  Promise<void> setLocalDescription(RTCSessionDescriptionInit description,
+                                    VoidFunction successCallback,
+                                    RTCPeerConnectionErrorCallback failureCallback);
+  Promise<void> createAnswer(RTCSessionDescriptionCallback successCallback,
+                              RTCPeerConnectionErrorCallback failureCallback);
+  Promise<void> setRemoteDescription(RTCSessionDescriptionInit description,
+                                      VoidFunction successCallback,
+                                      RTCPeerConnectionErrorCallback failureCallback);
+  Promise<void> addIceCandidate(RTCIceCandidateInit candidate,
+                                VoidFunction successCallback,
+                                RTCPeerConnectionErrorCallback failureCallback);
+};
+
+partial dictionary RTCOfferOptions {
+  boolean offerToReceiveAudio;
+  boolean offerToReceiveVideo;
+};
+
+enum RTCSdpType {
+  "offer",
+  "pranswer",
+  "answer",
+  "rollback"
+};
+
+[Constructor(RTCSessionDescriptionInit descriptionInitDict),
+ Exposed=Window]
+interface RTCSessionDescription {
+  readonly attribute RTCSdpType type;
+  readonly attribute DOMString  sdp;
+  [Default] object toJSON();
+};
+
+[Constructor(optional RTCIceCandidateInit candidateInitDict),
+ Exposed=Window]
+interface RTCIceCandidate {
+  readonly attribute DOMString               candidate;
+  readonly attribute DOMString?              sdpMid;
+  readonly attribute unsigned short?         sdpMLineIndex;
+  readonly attribute DOMString?              foundation;
+  readonly attribute RTCIceComponent?        component;
+  readonly attribute unsigned long?          priority;
+  readonly attribute DOMString?              address;
+  readonly attribute RTCIceProtocol?         protocol;
+  readonly attribute unsigned short?         port;
+  readonly attribute RTCIceCandidateType?    type;
+  readonly attribute RTCIceTcpCandidateType? tcpType;
+  readonly attribute DOMString?              relatedAddress;
+  readonly attribute unsigned short?         relatedPort;
+  readonly attribute DOMString?              usernameFragment;
+  RTCIceCandidateInit toJSON();
+};
+
+partial interface RTCPeerConnection {
+  sequence<RTCRtpSender>      getSenders();
+  sequence<RTCRtpReceiver>    getReceivers();
+  sequence<RTCRtpTransceiver> getTransceivers();
+  RTCRtpSender                addTrack(MediaStreamTrack track,
+                                        MediaStream... streams);
+  void                        removeTrack(RTCRtpSender sender);
+  RTCRtpTransceiver           addTransceiver((MediaStreamTrack or DOMString) trackOrKind,
+                                              optional RTCRtpTransceiverInit init);
+  attribute EventHandler ontrack;
+};
+
+dictionary RTCRtpTransceiverInit {
+  RTCRtpTransceiverDirection         direction = "sendrecv";
+  sequence<MediaStream>              streams = [];
+  sequence<RTCRtpEncodingParameters> sendEncodings = [];
+};
+
+enum RTCRtpTransceiverDirection {
+  "sendrecv",
+  "sendonly",
+  "recvonly",
+  "inactive"
+};
+
+[Exposed=Window]
+interface RTCRtpSender {
+  readonly attribute MediaStreamTrack? track;
+  readonly attribute RTCDtlsTransport? transport;
+  readonly attribute RTCDtlsTransport? rtcpTransport;
+  static RTCRtpCapabilities? getCapabilities(DOMString kind);
+  Promise<void>              setParameters(RTCRtpSendParameters parameters);
+  RTCRtpSendParameters       getParameters();
+  Promise<void>              replaceTrack(MediaStreamTrack? withTrack);
+  void                       setStreams(MediaStream... streams);
+  Promise<RTCStatsReport>    getStats();
+};
+
+[Exposed=Window]
+interface RTCRtpReceiver {
+  readonly attribute MediaStreamTrack  track;
+  readonly attribute RTCDtlsTransport? transport;
+  readonly attribute RTCDtlsTransport? rtcpTransport;
+  static RTCRtpCapabilities?            getCapabilities(DOMString kind);
+  RTCRtpReceiveParameters               getParameters();
+  sequence<RTCRtpContributingSource>    getContributingSources();
+  sequence<RTCRtpSynchronizationSource> getSynchronizationSources();
+  Promise<RTCStatsReport>               getStats();
+};
+
+[Exposed=Window]
+interface RTCRtpTransceiver {
+  readonly attribute DOMString?                  mid;
+  [SameObject]
+  readonly attribute RTCRtpSender                sender;
+  [SameObject]
+  readonly attribute RTCRtpReceiver              receiver;
+  readonly attribute boolean                     stopped;
+            attribute RTCRtpTransceiverDirection  direction;
+  readonly attribute RTCRtpTransceiverDirection? currentDirection;
+  void stop();
+  void setCodecPreferences(sequence<RTCRtpCodecCapability> codecs);
+};
+
+[Exposed=Window]
+interface RTCIceTransport : EventTarget {
+  readonly attribute RTCIceRole           role;
+  readonly attribute RTCIceComponent      component;
+  readonly attribute RTCIceTransportState state;
+  readonly attribute RTCIceGathererState  gatheringState;
+  sequence<RTCIceCandidate> getLocalCandidates();
+  sequence<RTCIceCandidate> getRemoteCandidates();
+  RTCIceCandidatePair?      getSelectedCandidatePair();
+  RTCIceParameters?         getLocalParameters();
+  RTCIceParameters?         getRemoteParameters();
+            attribute EventHandler         onstatechange;
+            attribute EventHandler         ongatheringstatechange;
+            attribute EventHandler         onselectedcandidatepairchange;
+};
+
+[Constructor(DOMString type, RTCTrackEventInit eventInitDict),
+ Exposed=Window]
+interface RTCTrackEvent : Event {
+  readonly attribute RTCRtpReceiver           receiver;
+  readonly attribute MediaStreamTrack         track;
+  [SameObject]
+  readonly attribute FrozenArray<MediaStream> streams;
+  readonly attribute RTCRtpTransceiver        transceiver;
+};
+
+dictionary RTCTrackEventInit : EventInit {
+  required RTCRtpReceiver        receiver;
+  required MediaStreamTrack      track;
+            sequence<MediaStream> streams = [];
+  required RTCRtpTransceiver     transceiver;
+};
+
+partial interface RTCPeerConnection {
+  readonly attribute RTCSctpTransport? sctp;
+  RTCDataChannel createDataChannel(USVString label,
+                                    optional RTCDataChannelInit dataChannelDict);
+            attribute EventHandler      ondatachannel;
+};
+
+[Exposed=Window]
+interface RTCDataChannel : EventTarget {
+  readonly attribute USVString           label;
+  readonly attribute boolean             ordered;
+  readonly attribute unsigned short?     maxPacketLifeTime;
+  readonly attribute unsigned short?     maxRetransmits;
+  readonly attribute USVString           protocol;
+  readonly attribute boolean             negotiated;
+  readonly attribute unsigned short?     id;
+  readonly attribute RTCPriorityType     priority;
+  readonly attribute RTCDataChannelState readyState;
+  readonly attribute unsigned long       bufferedAmount;
+            attribute unsigned long       bufferedAmountLowThreshold;
+            attribute EventHandler        onopen;
+            attribute EventHandler        onbufferedamountlow;
+            attribute EventHandler        onerror;
+            attribute EventHandler        onclose;
+  void close();
+            attribute EventHandler        onmessage;
+            attribute DOMString           binaryType;
+  void send(USVString data);
+  void send(Blob data);
+  void send(ArrayBuffer data);
+  void send(ArrayBufferView data);
+};
+
+[Constructor(DOMString type, RTCDataChannelEventInit eventInitDict),
+ Exposed=Window]
+interface RTCDataChannelEvent : Event {
+  readonly attribute RTCDataChannel channel;
+};
+
+[Exposed=Window]
+interface RTCDTMFSender : EventTarget {
+  void insertDTMF(DOMString tones,
+                  optional unsigned long duration = 100,
+                  optional unsigned long interToneGap = 70);
+            attribute EventHandler ontonechange;
+  readonly attribute boolean      canInsertDTMF;
+  readonly attribute DOMString    toneBuffer;
+};
+
+## Media capture and streams
+
+[Exposed=Window,
+ Constructor,
+ Constructor(MediaStream stream),
+ Constructor(sequence<MediaStreamTrack> tracks)]
+interface MediaStream : EventTarget {
+  readonly attribute DOMString    id;
+  sequence<MediaStreamTrack> getAudioTracks();
+  sequence<MediaStreamTrack> getVideoTracks();
+  sequence<MediaStreamTrack> getTracks();
+  MediaStreamTrack?          getTrackById(DOMString trackId);
+  void                       addTrack(MediaStreamTrack track);
+  void                       removeTrack(MediaStreamTrack track);
+  MediaStream                clone();
+  readonly attribute boolean      active;
+            attribute EventHandler onaddtrack;
+            attribute EventHandler onremovetrack;
+};
+
+[Exposed=Window]
+interface MediaStreamTrack : EventTarget {
+  readonly attribute DOMString             kind;
+  readonly attribute DOMString             id;
+  readonly attribute DOMString             label;
+            attribute boolean               enabled;
+  readonly attribute boolean               muted;
+            attribute EventHandler          onmute;
+            attribute EventHandler          onunmute;
+  readonly attribute MediaStreamTrackState readyState;
+            attribute EventHandler          onended;
+  MediaStreamTrack       clone();
+  void                   stop();
+  MediaTrackCapabilities getCapabilities();
+  MediaTrackConstraints  getConstraints();
+  MediaTrackSettings     getSettings();
+  Promise<void>          applyConstraints(optional MediaTrackConstraints constraints);
+            attribute EventHandler          onoverconstrained;
+};
+
+dictionary MediaTrackSupportedConstraints {
+  boolean width = true;
+  boolean height = true;
+  boolean aspectRatio = true;
+  boolean frameRate = true;
+  boolean facingMode = true;
+  boolean volume = true;
+  boolean sampleRate = true;
+  boolean sampleSize = true;
+  boolean echoCancellation = true;
+  boolean autoGainControl = true;
+  boolean noiseSuppression = true;
+  boolean latency = true;
+  boolean channelCount = true;
+  boolean deviceId = true;
+  boolean groupId = true;
+};
+
+dictionary MediaTrackCapabilities {
+  LongRange           width;
+  LongRange           height;
+  DoubleRange         aspectRatio;
+  DoubleRange         frameRate;
+  sequence<DOMString> facingMode;
+  DoubleRange         volume;
+  LongRange           sampleRate;
+  LongRange           sampleSize;
+  sequence<boolean>   echoCancellation;
+  sequence<boolean>   autoGainControl;
+  sequence<boolean>   noiseSuppression;
+  DoubleRange         latency;
+  LongRange           channelCount;
+  DOMString           deviceId;
+  DOMString           groupId;
+};
+
+dictionary MediaTrackConstraints : MediaTrackConstraintSet {
+  sequence<MediaTrackConstraintSet> advanced;
+};
+
+dictionary MediaTrackConstraintSet {
+  ConstrainLong      width;
+  ConstrainLong      height;
+  ConstrainDouble    aspectRatio;
+  ConstrainDouble    frameRate;
+  ConstrainDOMString facingMode;
+  ConstrainDouble    volume;
+  ConstrainLong      sampleRate;
+  ConstrainLong      sampleSize;
+  ConstrainBoolean   echoCancellation;
+  ConstrainBoolean   autoGainControl;
+  ConstrainBoolean   noiseSuppression;
+  ConstrainDouble    latency;
+  ConstrainLong      channelCount;
+  ConstrainDOMString deviceId;
+  ConstrainDOMString groupId;
+};
+
+dictionary MediaTrackSettings {
+  long      width;
+  long      height;
+  double    aspectRatio;
+  double    frameRate;
+  DOMString facingMode;
+  double    volume;
+  long      sampleRate;
+  long      sampleSize;
+  boolean   echoCancellation;
+  boolean   autoGainControl;
+  boolean   noiseSuppression;
+  double    latency;
+  long      channelCount;
+  DOMString deviceId;
+  DOMString groupId;
+};
+
+enum VideoFacingModeEnum {
+  "user",
+  "environment",
+  "left",
+  "right"
+};
+
+[Exposed=Window,
+ Constructor(DOMString type, MediaStreamTrackEventInit eventInitDict)]
+interface MediaStreamTrackEvent : Event {
+  [SameObject]
+  readonly attribute MediaStreamTrack track;
+};
+
+[Exposed=Window,
+ NoInterfaceObject]
+interface NavigatorUserMedia {
+  [SameObject]
+  readonly attribute MediaDevices mediaDevices;
+};
+
+[Exposed=Window]
+interface MediaDevices : EventTarget {
+  attribute EventHandler ondevicechange;
+  Promise<sequence<MediaDeviceInfo>> enumerateDevices();
+};
+
+[Exposed=Window]
+interface MediaDeviceInfo {
+  readonly attribute DOMString       deviceId;
+  readonly attribute MediaDeviceKind kind;
+  readonly attribute DOMString       label;
+  readonly attribute DOMString       groupId;
+  [Default] object toJSON();
+};
+
+enum MediaDeviceKind {
+  "audioinput",
+  "audiooutput",
+  "videoinput"
+};
+
+dictionary MediaStreamConstraints {
+  (boolean or MediaTrackConstraints) video = false;
+  (boolean or MediaTrackConstraints) audio = false;
+};
+
