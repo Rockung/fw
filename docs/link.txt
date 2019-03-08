@@ -11,6 +11,7 @@ https://github.com/versatica/JsSIP
 https://jitsi.org/
 https://github.com/seetaface/SeetaFaceEngine
 https://opus-codec.org/
+https://github.com/igniterealtime/Openfire
 
 https://electronjs.org/docs
 https://github.com/mappum/electron-webrtc
@@ -85,13 +86,24 @@ pixi.js
 svgedit -- https://github.com/SVG-Edit/svgedit
 
 
-https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
 https://blog.csdn.net/hello123yy/article/details/84976086
-
-turnserver -v -r 148.70.26.51:3478 -a -o -c /usr/local/etc/turnserver.conf
 
 https://www.harlanc.vip/
 https://yq.aliyun.com/articles/684748?spm=a2c4e.11153940.blogcont670085.16.239a7b94BRTyKf
 https://cloud.tencent.com/developer/information/turn%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6
 http://www.libsdl.cn/bbs/forum.php?mod=viewthread&tid=81
 
+
+
+https://www.npmjs.com/package/simple-peer
+https://github.com/feross/simple-peer
+https://github.com/akshayKMR/oorja
+https://oorja.io/
+https://github.com/webtorrent/webtorrent
+https://github.com/wdebeaum/svg-whiteboard
+https://github.com/jitsi/jitsi-meet.git
+
+https://etherpad.org/
+
+turnserver -v -r 148.70.26.51:3478 -a -o -c /usr/local/etc/turnserver.conf
+update-rc.d -n xxxx remove

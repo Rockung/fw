@@ -1,0 +1,17 @@
+nvm: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.2/install.sh | bash
+licode: https://github.com/lynckia/licode
+
+https://blog.csdn.net/zhujuyu/article/details/79217960
+curl https://install.meteor.com > install.meteor.sh
+TARBALL_URL="file:///home/ubuntu/meteor-bootstrap-os.linux.x86_64.tar.gz"
+sh install.meteor.sh
+
+https://blog.csdn.net/qq171563857/article/details/80941058
+54.192.225.217 warehouse.meteor.com
+
+https://github.com/akshayKMR/oorja.git
+export ROOT_URL=https://148.70.123.76
+
+ssl
+https://www.cnblogs.com/jingxiaoniu/p/6745254.html
+http://www.nginx.cn/927.html

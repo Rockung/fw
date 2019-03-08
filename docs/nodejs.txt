@@ -1,0 +1,2 @@
+nodejs gyp WARN EACCES user "root" does not have permission to access the dev dir
+sudo  npm install time   -g --unsafe-perm 
