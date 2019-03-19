@@ -103,6 +103,7 @@ https://github.com/webtorrent/webtorrent
 https://github.com/wdebeaum/svg-whiteboard
 https://github.com/jitsi/jitsi-meet.git
 
+https://www.npmjs.com/package/xterm
 https://etherpad.org/
 
 turnserver -v -r 148.70.26.51:3478 -a -o -c /usr/local/etc/turnserver.conf
