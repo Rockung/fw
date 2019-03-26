@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<style>
+  ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    overflow: hidden;/*清除浮动，子元素设置浮动不能将父元素撑开*/
+  }
+  li{
+    float: left;
+  }
+  li a{
+    display: block;
+    color:#444;
+    text-decoration: none;
+    padding:8px 16px;
+  }
+  li :hover{
+    background-color:#ccc;
+    color: white;
+  }
+</style>
+</head>
+<body>
+  <ul>
+    <li><a href="#">首页</a></li>
+    <li><a href="#">课程</a></li>
+    <li><a href="#">路径</a></li>
+    <li><a href="#">资源</a></li>
+  </ul>
+</body>
+</html>

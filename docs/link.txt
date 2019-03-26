@@ -12,6 +12,7 @@ https://jitsi.org/
 https://github.com/seetaface/SeetaFaceEngine
 https://opus-codec.org/
 https://github.com/igniterealtime/Openfire
+https://mediasoup.org/
 
 https://electronjs.org/docs
 https://github.com/mappum/electron-webrtc
@@ -51,6 +52,8 @@ easyrtc-master
 serverless-webrtc
 node-webrtc
 apprtc
+
+https://www.npmjs.com/package/videojs-record
 
 # development
 eggjs.org, umijs.org, antd
